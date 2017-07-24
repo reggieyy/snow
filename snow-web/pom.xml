@@ -5,7 +5,7 @@
     <groupId>com.reggie.snow</groupId>
     <artifactId>snow</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <description>snow</description>
+    <description>snow-web</description>
     <packaging>jar</packaging>
 
     <name>snow</name>
@@ -37,6 +37,10 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-jetty</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jdbc</artifactId>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -81,6 +85,15 @@
             <artifactId>fastjson</artifactId>
             <version>1.1.36</version>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/commons-dbcp/commons-dbcp -->
+        <dependency>
+            <groupId>commons-dbcp</groupId>
+            <artifactId>commons-dbcp</artifactId>
+            <version>1.2.2</version>
+        </dependency>
+
+
         <!-- Test -->
         <dependency>
             <groupId>junit</groupId>

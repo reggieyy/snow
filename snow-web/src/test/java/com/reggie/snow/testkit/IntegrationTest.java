@@ -1,6 +1,6 @@
 package com.reggie.snow.testkit;
 
-import com.reggie.snow.SnowApplication;
+import com.reggie.snow.SnowWebApplication;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.boot.test.TestRestTemplate;
@@ -12,7 +12,7 @@ import org.springframework.web.client.RestTemplate;
  * Created by didi on 17/4/14.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = SnowApplication.class)
+@SpringApplicationConfiguration(classes = SnowWebApplication.class)
 @WebIntegrationTest
 public class IntegrationTest {
 
