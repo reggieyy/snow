@@ -1,6 +1,5 @@
 package com.reggie.snow.services;
 
-import com.reggie.snow.daos.EmplDao;
 import com.reggie.snow.daos.TransConfigDao;
 import com.reggie.snow.daos.entity.TransConfigModel;
 import java.util.List;
@@ -24,5 +23,19 @@ public class TransConfigService {
 
   public void insertRow(TransConfigModel transConfigModel) {
     transConfigDao.insertRow(transConfigModel);
+  }
+
+  public TransConfigModel findByID(String transID){
+    log.info("transID-----------"+transID);
+    TransConfigModel t = transConfigDao.findByID(transID);
+    return t;
+  }
+
+  public void updateRow(TransConfigModel transConfigModel){
+    transConfigDao.updateRow(transConfigModel);
+  }
+
+  public void deleteRow(String transID){
+    transConfigDao.deleteRow(transID);
   }
 }

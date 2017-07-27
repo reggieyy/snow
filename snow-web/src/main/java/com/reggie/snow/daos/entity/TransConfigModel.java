@@ -8,7 +8,11 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
- * Created by reggie on 2017/7/24.
+ *
+ * 核心配置表
+ * @date 2017.7.26
+ * @author qingtian
+ *
  */
 @Getter
 @Setter
@@ -24,6 +28,7 @@ public class TransConfigModel implements Serializable {
   private String transDesc;
   private String sourceConfig;
   private String targetConfig;
+  private String sourceTargetSql;
   private String mappingConfig;
   private Integer isValid;
   private Integer isEnable;

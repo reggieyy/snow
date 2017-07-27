@@ -31,4 +31,7 @@ spring:
 
 logging:
   level:
-    com.ibatis:DEBUG
+    com.ibatis:INFO
+mybatis:
+  typeAliasesPackage: com.reggie.snow.daos.entity
+  mapperLocations: classpath:mapper/*.xml
