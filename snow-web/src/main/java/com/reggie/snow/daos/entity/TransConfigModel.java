@@ -26,12 +26,15 @@ public class TransConfigModel implements Serializable {
   private String transID;
   private String transName;
   private String transDesc;
-  private String sourceConfig;
-  private String targetConfig;
+  private String sourceConfigID;
+  private String targetConfigID;
   private String sourceTargetSql;
   private String mappingConfig;
   private Integer isValid;
   private Integer isEnable;
   private Integer type;
+
+  private String sourceTable;
+  private String targetTable;
 
 }

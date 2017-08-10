@@ -31,5 +31,6 @@ public class SourceConfigModel implements Serializable {
   private String sourceUrl;
   private String userName;
   private String passWord;
+  private Integer type;
 
 }

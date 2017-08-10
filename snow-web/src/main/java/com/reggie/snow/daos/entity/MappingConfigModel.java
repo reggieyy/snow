@@ -19,9 +19,10 @@ public class MappingConfigModel implements Serializable {
 
   private static final long serialVersionUID = 2229703276977629486L;
 
-  private String fromFields;
-  private String toFields;
-  private String fromTable;
-  private String toTable;
+  private String transID;
+  private String fromField;
+  private String fromFieldName;
+  private String toField;
+  private String toFieldName;
 
 }

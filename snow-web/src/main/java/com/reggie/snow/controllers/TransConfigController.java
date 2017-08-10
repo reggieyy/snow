@@ -1,6 +1,7 @@
 package com.reggie.snow.controllers;
 
 import com.alibaba.fastjson.JSONObject;
+import com.reggie.snow.daos.entity.ConfigDto;
 import com.reggie.snow.daos.entity.TransConfigModel;
 import com.reggie.snow.services.TransConfigService;
 import io.swagger.annotations.ApiImplicitParam;
@@ -55,10 +56,10 @@ public class TransConfigController {
       @ApiImplicitParam(name = "transConfigModel", value = "配置类", required = true, dataType = "TransConfigModel")
   })
   @RequestMapping(value = "/insertRow", method = RequestMethod.POST)
-  public ResponseEntity<JSONObject> insertRow(@RequestBody TransConfigModel transConfigModel) {
+  public ResponseEntity<JSONObject> insertRow(@RequestBody ConfigDto configDto) {
     JSONObject object = new JSONObject();
     try {
-      transConfigService.insertRow(transConfigModel);
+      transConfigService.insertRow(configDto);
       object.put("flag", true);
       return new ResponseEntity<JSONObject>(object, HttpStatus.OK);
     } catch (Exception e) {
