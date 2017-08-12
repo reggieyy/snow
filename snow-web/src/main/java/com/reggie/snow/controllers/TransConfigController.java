@@ -2,8 +2,10 @@ package com.reggie.snow.controllers;
 
 import com.alibaba.fastjson.JSONObject;
 import com.reggie.snow.daos.entity.ConfigDto;
+import com.reggie.snow.daos.entity.SourceConfigModel;
 import com.reggie.snow.daos.entity.TransConfigModel;
 import com.reggie.snow.services.TransConfigService;
+import com.reggie.snow.util.tools.JdbcTemplateUtil;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
@@ -69,6 +71,30 @@ public class TransConfigController {
     }
   }
 
+  @ApiOperation(value="新增数据源信息", notes="新增一条数据源配置，新增时候需要验证数据源是否可用")
+  @ApiImplicitParams({
+      @ApiImplicitParam(name = "transConfigModel", value = "配置类", required = true, dataType = "SourceConfigModel")
+  })
+  @RequestMapping(value = "/insertSourceRow", method = RequestMethod.POST)
+  public ResponseEntity<JSONObject> insertSourceRow(@RequestBody SourceConfigModel sourceConfigModel) {
+    JSONObject object = new JSONObject();
+    try {
+      if(JdbcTemplateUtil.checkDataSource(sourceConfigModel)){
+        transConfigService.insertSrouceConfigRow(sourceConfigModel);
+      }else{
+
+      }
+      object.put("msg", "创建数据源成功");
+      object.put("flag", true);
+      return new ResponseEntity<JSONObject>(object, HttpStatus.OK);
+    } catch (Exception e) {
+      log.error("新增配置信息异常{}", e.getMessage());
+      object.put("flag", false);
+      object.put("msg", e.getMessage());
+      return new ResponseEntity<JSONObject>(object, HttpStatus.OK);
+    }
+  }
+
   @ApiOperation(value="查询单条配置信息", notes="根据transID查询单条配置信息,返回Object")
   @ApiImplicitParams({
       @ApiImplicitParam(name = "transID", value = "配置ID", required = true, dataType = "String")
@@ -77,8 +103,8 @@ public class TransConfigController {
   public ResponseEntity<JSONObject> findByID(@PathVariable String transID){
     JSONObject object = new JSONObject();
     try {
-      TransConfigModel transConfigModel = transConfigService.findByID(transID);
-      object.put("model", transConfigModel);
+      ConfigDto configDto = transConfigService.findByID(transID);
+      object.put("model", configDto);
       return new ResponseEntity<JSONObject>(object, HttpStatus.OK);
     } catch (Exception e) {
       log.error("新增配置信息异常{}", e);
@@ -92,10 +118,10 @@ public class TransConfigController {
       @ApiImplicitParam(name = "transConfigModel", value = "配置类", required = true, dataType = "TransConfigModel")
   })
   @RequestMapping(value = "/updateRow", method = RequestMethod.PUT)
-  public ResponseEntity<JSONObject> updateRow(@RequestBody TransConfigModel transConfigModel){
+  public ResponseEntity<JSONObject> updateRow(@RequestBody ConfigDto configDto){
     JSONObject object = new JSONObject();
     try {
-      transConfigService.updateRow(transConfigModel);
+      transConfigService.updateRow(configDto);
       object.put("flag", true);
       return new ResponseEntity<JSONObject>(object, HttpStatus.OK);
     } catch (Exception e) {

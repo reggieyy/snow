@@ -25,7 +25,7 @@ public class TransExecutorService {
    * @param transID
    */
   public void execute(String transID){
-    TransConfigModel transConfigModel = transConfigDao.findByID(transID);
+    TransConfigModel transConfigModel = transConfigDao.findTransConfigByID(transID);
 
   }
 }

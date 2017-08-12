@@ -1,6 +1,10 @@
 package com.reggie.snow.tests;
 
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.junit.Test;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -14,7 +18,7 @@ public class TestJdbcTemplate {
 
   private JdbcTemplate jdbcTemplate;
 
-  public @Test void test(){
+  public @Test void test() throws SQLException {
     BasicDataSource basicDataSource = new BasicDataSource();
 
     // 基本4项
@@ -26,8 +30,22 @@ public class TestJdbcTemplate {
 
     jdbcTemplate = new JdbcTemplate();
     jdbcTemplate.setDataSource(basicDataSource);
-    List list = jdbcTemplate.queryForList("select id,name from test1_t");
-    System.out.print(list);
+    Map map = new HashMap<>();
+    map.put("1",jdbcTemplate);
+    JdbcTemplate jdbcTemplate1 = (JdbcTemplate) map.get("1");
+    List list = jdbcTemplate1.queryForList("select 1 from dual");
+
+    if(list.size() > 0){
+      System.out.print(list);
+      Connection connection = jdbcTemplate1.getDataSource().getConnection();
+      System.out.println(connection.isClosed());
+      connection.close();
+      System.out.println(connection.isClosed());
+      List list1 = jdbcTemplate1.queryForList("select 1 from dual");
+      System.out.print(list1);
+    }else{
+      System.out.print(0);
+    }
   }
 
 }

@@ -6,6 +6,7 @@ import com.reggie.snow.daos.entity.ConfigDto;
 import com.reggie.snow.daos.entity.MappingConfigModel;
 import com.reggie.snow.daos.entity.SourceConfigModel;
 import com.reggie.snow.daos.entity.TransConfigModel;
+import java.util.ArrayList;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,43 +27,66 @@ public class TransConfigService {
     return transConfigDao.findAll(transConfigModel);
   }
 
+
+  /**
+   *
+   * 根据transID查询对应转数配置
+   * @param transID
+   * @return config
+   *
+   */
+  public ConfigDto findByID(String transID){
+    //配置主表信息
+    TransConfigModel transConfigModel = transConfigDao.findTransConfigByID(transID);
+    if(transConfigModel == null){
+      throw new RuntimeException("没有查询到对应数据");
+    }
+    //数据源信息
+    List<SourceConfigModel> list_s = new ArrayList<>();
+    list_s.add(transConfigDao.findSourceConfigByID(transConfigModel.getSourceConfigID()));
+    list_s.add(transConfigDao.findSourceConfigByID(transConfigModel.getTargetConfigID()));
+    //mapping表信息
+    List<MappingConfigModel> list_m = transConfigDao.findMappingConfigByID(transID);
+    ConfigDto config = new ConfigDto();
+    config.setTransConfigModel(transConfigModel);
+    config.setSourceConfigModelList(list_s);
+    config.setMappingConfigModelList(list_m);
+    return config;
+  }
+
   /**
    * 配置信息写入，数据源信息需要单独保存
    * @param configDto
    */
-//  @Transactional
+  @Transactional
   public void insertRow(ConfigDto configDto) {
 //    JSONObject.toJavaObject();
-    List<SourceConfigModel> list_s = configDto.getSourceConfigModelList();
     List<MappingConfigModel> list_m = configDto.getMappingConfigModelList();
-    if(!list_s.isEmpty()){
-      list_s.stream().forEach((sourceConfigModel) -> {
-        if(1 == sourceConfigModel.getType()){
-          configDto.getTransConfigModel().setSourceConfigID(sourceConfigModel.getSourceID());
-        }else{
-          configDto.getTransConfigModel().setTargetConfigID(sourceConfigModel.getSourceID());
-        }
-        transConfigDao.insertSourceConfigRow(sourceConfigModel);
-      });
-    }
     transConfigDao.insertRow(configDto.getTransConfigModel());
     if(!list_m.isEmpty()){
       list_m.stream().forEach((mappingConfigModel) -> {
         mappingConfigModel.setTransID(configDto.getTransConfigModel().getTransID());
-        transConfigDao.insertMappingRow(mappingConfigModel);
       });
     }
-
+    transConfigDao.batchInsertMappingRow(list_m);
   }
 
-  public TransConfigModel findByID(String transID){
+  public void insertSrouceConfigRow(SourceConfigModel sourceConfigModel){
+    transConfigDao.insertSourceConfigRow(sourceConfigModel);
+  }
+
+  public TransConfigModel findTransConfigByID(String transID){
     log.info("transID-----------"+transID);
-    TransConfigModel t = transConfigDao.findByID(transID);
+    TransConfigModel t = transConfigDao.findTransConfigByID(transID);
     return t;
   }
 
-  public void updateRow(TransConfigModel transConfigModel){
-    transConfigDao.updateRow(transConfigModel);
+  @Transactional
+  public void updateRow(ConfigDto configDto){
+
+
+
+//    transConfigDao.updateRow(transConfigModel);
   }
 
   public void deleteRow(String transID){
