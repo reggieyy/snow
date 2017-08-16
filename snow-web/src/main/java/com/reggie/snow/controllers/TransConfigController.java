@@ -79,7 +79,7 @@ public class TransConfigController {
   public ResponseEntity<JSONObject> insertSourceRow(@RequestBody SourceConfigModel sourceConfigModel) {
     JSONObject object = new JSONObject();
     try {
-      if(JdbcTemplateUtil.checkDataSource(sourceConfigModel)){
+      if(JdbcTemplateUtil.checkDataSource(sourceConfigModel) != null){
         transConfigService.insertSrouceConfigRow(sourceConfigModel);
       }else{
 

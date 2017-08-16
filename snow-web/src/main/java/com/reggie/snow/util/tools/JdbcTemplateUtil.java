@@ -21,7 +21,7 @@ public class JdbcTemplateUtil {
    * @return
    * @throws SQLException
    */
-  public static boolean checkDataSource(SourceConfigModel sourceConfigModel) {
+  public static JdbcTemplate checkDataSource(SourceConfigModel sourceConfigModel) {
     BasicDataSource basicDataSource = new BasicDataSource();
     // 基本4项
     basicDataSource.setDriverClassName(sourceConfigModel.getDriverClass());
@@ -36,11 +36,11 @@ public class JdbcTemplateUtil {
       List list = jdbcTemplate.queryForList("select 1 from dual");
       if(list.size() > 0) {
         jdbcMap.put(sourceConfigModel.getSourceID(),jdbcTemplate);
-        return true;
+        return jdbcTemplate;
       }
     } catch (Exception e){
       throw new RuntimeException("该数据源无法使用，请检查配置是否正确...");
     }
-    return false;
+    return null;
   }
 }
