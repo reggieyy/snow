@@ -1,5 +1,6 @@
 package com.reggie.snow.daos;
 
+import com.reggie.snow.daos.entity.GroupConfigModel;
 import com.reggie.snow.daos.entity.MappingConfigModel;
 import com.reggie.snow.daos.entity.SourceConfigModel;
 import com.reggie.snow.daos.entity.TransConfigModel;
@@ -41,6 +42,11 @@ public interface TransConfigDao {
   String BATCH_INSERT_MAPPING_ROW = "<script>insert into mapping_config (trans_id,from_field,from_field_name,to_field,to_field_name) "
       + "values <foreach collection=\"mappingConfigModels\" item=\"mapping\" index=\"index\" separator=\",\">"
       + "(#{mapping.transID},#{mapping.fromField},#{mapping.fromFieldName},#{mapping.toField},#{mapping.toFieldName})</foreach></script>";
+  String INSERT_GROUP_CONFIG_ROW = "insert into group_config (group_id,group_name,group_desc,isvalid) values "
+      + "(#{groupID},#{groupName},#{groupDesc},#{isValid})";
+  String SELECT_GROUPCONFIG = "select * from group_config";
+
+
 
   @Select(SELECT_ALL)
   @ResultMap("transConfig")
@@ -97,6 +103,12 @@ public interface TransConfigDao {
 
   @Insert(BATCH_INSERT_MAPPING_ROW)
   void batchInsertMappingRow(@Param("mappingConfigModels") List<MappingConfigModel> mappingConfigModels);
+
+  @Insert(INSERT_GROUP_CONFIG_ROW)
+  void insertGroupConfigrRow(GroupConfigModel groupConfigModel);
+
+  @Select(SELECT_GROUPCONFIG)
+  List<GroupConfigModel> findGroupConfigs(GroupConfigModel groupConfigModel);
 
 
 }

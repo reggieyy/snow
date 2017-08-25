@@ -25,6 +25,26 @@ module.exports = {
         exclude: /node_modules/
       },
       {
+          test: require.resolve('jquery'),
+          use: [{
+              loader: 'expose-loader',
+              options: 'jQuery'
+          },{
+              loader: 'expose-loader',
+              options: '$'
+          }]
+      },
+      {
+        test: /\.css$/,
+        loader: 'style-loader!css-loader' },
+      {
+        test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
+        loader: "file-loader" },
+      {
+        test: /\.(gif|jpg|png|woff|svg|eot|ttf)\??.*$/,
+        loader: 'url-loader?limit=8192&name=[path][name].[ext]'
+      },
+      {
         test: /\.(png|jpg|gif|svg)$/,
         loader: 'file-loader',
         options: {

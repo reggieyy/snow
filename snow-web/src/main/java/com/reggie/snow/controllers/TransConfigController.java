@@ -2,6 +2,7 @@ package com.reggie.snow.controllers;
 
 import com.alibaba.fastjson.JSONObject;
 import com.reggie.snow.daos.entity.ConfigDto;
+import com.reggie.snow.daos.entity.GroupConfigModel;
 import com.reggie.snow.daos.entity.SourceConfigModel;
 import com.reggie.snow.daos.entity.TransConfigModel;
 import com.reggie.snow.services.TransConfigService;
@@ -9,6 +10,7 @@ import com.reggie.snow.util.tools.JdbcTemplateUtil;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import java.util.HashMap;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,9 +37,47 @@ public class TransConfigController {
   @Autowired
   private TransConfigService transConfigService;
 
+  @ApiOperation(value ="插入分组信息", notes = "想分组信息表插入一条记录")
+  @ApiImplicitParams({
+      @ApiImplicitParam(name = "groupConfigModel",value = "分组信息类", required = true, dataType = "GroupConfigModel")
+  })
+  @RequestMapping(value = "insertGroupConfigRow", method = RequestMethod.POST)
+  public ResponseEntity<JSONObject> insertGroupConfigRow(@RequestBody GroupConfigModel groupConfigModel){
+    JSONObject object = new JSONObject();
+    try{
+      transConfigService.insertGroupConfigRow(groupConfigModel);
+      object.put("flag",true);
+    } catch (Exception e) {
+      object.put("flag",false);
+      object.put("msg",e.getMessage());
+    }finally {
+      return new ResponseEntity<JSONObject>(object,HttpStatus.OK);
+    }
+  }
+
+  @ApiOperation(value ="插入分组信息", notes = "想分组信息表插入一条记录")
+  @ApiImplicitParams({
+      @ApiImplicitParam(name = "groupConfigModel",value = "分组信息类", required = true, dataType = "GroupConfigModel")
+  })
+  @RequestMapping(value = "findGroupConfigs", method = RequestMethod.POST)
+  public ResponseEntity<JSONObject> findGroupConfigs(@RequestBody GroupConfigModel groupConfigModel){
+    JSONObject object = new JSONObject();
+    try {
+      List<GroupConfigModel> list = transConfigService.findGroupConfigs(groupConfigModel);
+      object.put("flag",true);
+      object.put("configs", list);
+    } catch (Exception e) {
+      object.put("flag",false);
+      object.put("msg",e.getMessage());
+    } finally {
+      return new ResponseEntity<JSONObject>(object, HttpStatus.OK);
+    }
+  }
+
+
   @ApiOperation(value="查询所有配置", notes="查询所有转数配置信息,返回list")
   @ApiImplicitParams({
-      @ApiImplicitParam(name = "transConfigModel", value = "配置类", required = true, dataType = "TransConfigModel")
+      @ApiImplicitParam(name = "transConfigModel", value = "配置类", required = false, dataType = "TransConfigModel")
   })
   @RequestMapping(value = "/findAll", method = RequestMethod.POST)
   public ResponseEntity<JSONObject> findEmpls(@RequestBody TransConfigModel transConfigModel) {

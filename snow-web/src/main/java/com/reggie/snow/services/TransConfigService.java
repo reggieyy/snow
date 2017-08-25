@@ -3,6 +3,7 @@ package com.reggie.snow.services;
 import com.alibaba.fastjson.JSONObject;
 import com.reggie.snow.daos.TransConfigDao;
 import com.reggie.snow.daos.entity.ConfigDto;
+import com.reggie.snow.daos.entity.GroupConfigModel;
 import com.reggie.snow.daos.entity.MappingConfigModel;
 import com.reggie.snow.daos.entity.SourceConfigModel;
 import com.reggie.snow.daos.entity.TransConfigModel;
@@ -25,6 +26,14 @@ public class TransConfigService {
 
   public List<TransConfigModel> findAll(TransConfigModel transConfigModel){
     return transConfigDao.findAll(transConfigModel);
+  }
+
+  public List<GroupConfigModel> findGroupConfigs(GroupConfigModel groupConfigModel){
+    return transConfigDao.findGroupConfigs(groupConfigModel);
+  }
+
+  public void insertGroupConfigRow(GroupConfigModel groupConfigModel){
+    transConfigDao.insertGroupConfigrRow(groupConfigModel);
   }
 
 
