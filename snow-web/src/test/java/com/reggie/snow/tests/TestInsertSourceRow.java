@@ -14,9 +14,9 @@ public class TestInsertSourceRow extends IntegrationTest {
 
   public @Test void insertSourceRow(){
     SourceConfigModel sourceConfigModel = new SourceConfigModel();
-    sourceConfigModel.setSourceID(UUID.randomUUID().toString().replace("-",""));
+//    sourceConfigModel.setSourceID(UUID.randomUUID().toString().replace("-",""));
     sourceConfigModel.setUserName("root");
-    sourceConfigModel.setSourceName("A库");
+    sourceConfigModel.setSourceName("C库");
     sourceConfigModel.setPassWord("qtrh2130");
     sourceConfigModel.setDriverClass("com.mysql.jdbc.Driver");
     sourceConfigModel.setSourceUrl("jdbc:mysql://localhost:3306/test3");

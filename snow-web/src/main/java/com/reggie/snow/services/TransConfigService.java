@@ -101,4 +101,8 @@ public class TransConfigService {
   public void deleteRow(String transID){
     transConfigDao.deleteRow(transID);
   }
+
+  public List<SourceConfigModel> findSourceConfigs(SourceConfigModel sourceConfigModel){
+    return transConfigDao.findSourceConfigs(sourceConfigModel);
+  }
 }

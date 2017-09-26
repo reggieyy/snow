@@ -1,4 +1,4 @@
-<template>
+  <template>
 
     <div id="app" class="container">
 
@@ -15,7 +15,7 @@
             </div>
             <div id="navbar" class="navbar-collapse collapse">
               <ul class="nav navbar-nav">
-                <li class="active"><a href="#">配置</a></li>
+                <li class="active"><router-link to="/configSet">配置</router-link></li>
                 <li class="dropdown">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">扩展<span class="caret"></span></a>
                   <ul class="dropdown-menu">
@@ -41,50 +41,13 @@
           </div>
         </nav>
 
+        <div class="jumbotron">
+          <p>SNOW是一个简单的ETL工具，目前支持一对一的转数，算法上没有特殊加工，只是对数据插入进行了切割</p>
+          <p>支持即插即用，前后端完全分离，面向SOA</p>
+        </div>
+        <router-view></router-view>
 
-      <div class="jumbotron">
-        <p>SNOW是一个简单的ETL工具，目前支持一对一的转数，算法上没有特殊加工，只是对数据插入进行了切割</p>
-        <p>支持即插即用，前后端完全分离，面向SOA</p>
-      </div>
-
-      <div class="table-responsive">
-            <table class="table table-striped">
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>名称</th>
-                  <th>当前状态</th>
-                  <th>转数类型</th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>1,001</td>
-                  <td>Lorem</td>
-                  <td>ipsum</td>
-                  <td>dolor</td>
-                  <td>sit</td>
-                </tr>
-                <tr>
-                  <td>1,002</td>
-                  <td>amet</td>
-                  <td>consectetur</td>
-                  <td>adipiscing</td>
-                  <td>elit</td>
-                </tr>
-                <tr>
-                  <td>1,003</td>
-                  <td>Integer</td>
-                  <td>nec</td>
-                  <td>odio</td>
-                  <td>Praesent</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-    </div> <!-- /container -->
+    </div>
 
 </template>
 

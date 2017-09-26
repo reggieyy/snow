@@ -38,13 +38,14 @@ public interface TransConfigDao {
   String DELETE_ROW = "delete from trans_config where trans_id = #{transID}";
   //数据源信息表插入数据
   String INSERT_SOURCE_CONFIG_ROW = "insert into source_config (source_id,source_name,source_desc,driver_class,source_url,username,password)"
-      + "values (#{sourceID},#{sourceName},#{sourceDesc},#{driverClass},#{sourceUrl},#{userName},#{passWord})";
+      + "values ((select replace(uuid(),'-','') from dual),#{sourceName},#{sourceDesc},#{driverClass},#{sourceUrl},#{userName},#{passWord})";
   String BATCH_INSERT_MAPPING_ROW = "<script>insert into mapping_config (trans_id,from_field,from_field_name,to_field,to_field_name) "
       + "values <foreach collection=\"mappingConfigModels\" item=\"mapping\" index=\"index\" separator=\",\">"
       + "(#{mapping.transID},#{mapping.fromField},#{mapping.fromFieldName},#{mapping.toField},#{mapping.toFieldName})</foreach></script>";
   String INSERT_GROUP_CONFIG_ROW = "insert into group_config (group_id,group_name,group_desc,isvalid) values "
       + "(#{groupID},#{groupName},#{groupDesc},#{isValid})";
-  String SELECT_GROUPCONFIG = "select * from group_config";
+  String SELECT_GROUPCONFIGS = "select * from group_config";
+  String SELECT_SOURCECONFIGS = "select source_id as sourceID,source_Name as SourceName from source_config where 1=1";
 
 
 
@@ -107,8 +108,11 @@ public interface TransConfigDao {
   @Insert(INSERT_GROUP_CONFIG_ROW)
   void insertGroupConfigrRow(GroupConfigModel groupConfigModel);
 
-  @Select(SELECT_GROUPCONFIG)
+  @Select(SELECT_GROUPCONFIGS)
   List<GroupConfigModel> findGroupConfigs(GroupConfigModel groupConfigModel);
+
+  @Select(SELECT_SOURCECONFIGS)
+  List<SourceConfigModel> findSourceConfigs(SourceConfigModel sourceConfigModel);
 
 
 }

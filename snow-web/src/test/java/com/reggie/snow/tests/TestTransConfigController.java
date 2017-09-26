@@ -26,8 +26,8 @@ public class TestTransConfigController extends IntegrationTest {
 
   @Test
   public void emplTest() {
-//        select();
-    add();
+        select();
+//    add();
 //    get();
 //    update();
 //    delete();
